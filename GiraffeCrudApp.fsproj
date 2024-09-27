@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Models.fs" />
-    <Compile Include="Storage.fs" />
-    <Compile Include="Handlers.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="src/Models.fs" />
+    <Compile Include="src/Storage.fs" />
+    <Compile Include="src/Handlers.fs" />
+    <Compile Include="src/Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
