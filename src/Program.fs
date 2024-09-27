@@ -8,6 +8,9 @@ open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open Handlers
 open Microsoft.AspNetCore.Cors.Infrastructure
+open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Http
+open System.Threading.Tasks
 
 let configureCors (builder : CorsPolicyBuilder) =
     builder.WithOrigins("http://localhost:5000")
@@ -33,6 +36,13 @@ let webApp =
     ]
 
 let configureApp (app : IApplicationBuilder) =
+    app.Use(fun (context : HttpContext) (next : RequestDelegate) ->
+        task {
+            context.Items.["ConnectionString"] <- "helloworld"
+            return! next.Invoke(context)
+        } :> Task)
+    |> ignore
+    
     app.UseCors(configureCors)
        .UseGiraffe webApp
 

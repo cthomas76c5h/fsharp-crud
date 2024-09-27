@@ -10,7 +10,11 @@ let private jsonResponse (statusCode: int) (obj: obj) =
 
 let getAll : HttpHandler =
     fun next ctx ->
-        jsonResponse 200 (getAll()) next ctx
+        task {
+            let connectionString = ctx.Items.["ConnectionString"] :?> string
+            printf "%s\n" connectionString
+            return! jsonResponse 200 (getAll()) next ctx
+        }
 
 let getById (id: int) : HttpHandler =
     fun next ctx ->
