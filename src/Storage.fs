@@ -2,7 +2,7 @@ module Storage
 
 open Models
 
-let mutable private items = Map.empty<int, Item>
+let mutable private items = Map.empty<int, User>
 let mutable private nextId = 1
 
 let getAll () = items |> Map.toList |> List.map snd

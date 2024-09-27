@@ -1,7 +1,10 @@
 module Models
 
-type Item = {
+type User = {
     Id: int
-    Name: string
-    Description: string
+    Username: string
+    Email: string
+    Password: string
+    Bio: string
+    Image: string
 }

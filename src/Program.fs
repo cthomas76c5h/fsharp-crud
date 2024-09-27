@@ -11,6 +11,7 @@ open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
 open System.Threading.Tasks
+open Npgsql.FSharp
 
 let configureCors (builder : CorsPolicyBuilder) =
     builder.WithOrigins("http://localhost:5000")
@@ -38,7 +39,14 @@ let webApp =
 let configureApp (app : IApplicationBuilder) =
     app.Use(fun (context : HttpContext) (next : RequestDelegate) ->
         task {
-            context.Items.["ConnectionString"] <- "helloworld"
+            let connectionString : string =
+                Sql.host "localhost"
+                |> Sql.database "example"
+                |> Sql.username "postgres"
+                |> Sql.password "secret1234"
+                |> Sql.port 5433
+                |> Sql.formatConnectionString
+            context.Items.["ConnectionString"] <- connectionString
             return! next.Invoke(context)
         } :> Task)
     |> ignore
